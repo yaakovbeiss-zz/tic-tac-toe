@@ -28,14 +28,20 @@ class Display
       end
       print "\n"
     end
-    game_info.map { |info| print info }
+    game_info.map { |info| puts info }
     errors.map { |error| puts error }
     sleep(0.4) unless errors.empty?
+    sleep(0.4) unless game_info.empty?
     clear_errors
+    clear_game_info
   end
 
   def clear_errors
     @errors = []
+  end
+
+  def clear_game_info
+    @game_info = []
   end
 
   def background_color(pos)

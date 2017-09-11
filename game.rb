@@ -68,10 +68,13 @@ class Game
     puts "Would you like to play again? y/n"
     answer = gets.chomp
     if answer == 'y'
-      puts "Lets play again!"
       reset_board
+      display.game_info << "Lets play again!"
       play
+    else
+      display.game_info << "Catch you later!"
     end
+    display.render
   end
 
   def reset_board
@@ -82,7 +85,7 @@ class Game
   def play
     display.render
     loop do
-      move = current_player.make_move
+      move = current_player.make_move(display)
       if board.empty?(move)
         board[move] = current_player.symbol
         board.last_move = move

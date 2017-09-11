@@ -4,6 +4,9 @@ require_relative 'display'
 require_relative 'board'
 require 'faker'
 
+
+puts "Welcome to Tic Tac Toe!"
+
 board_size = nil
 until board_size
   puts "Please enter the board size: "
@@ -16,20 +19,20 @@ display = Display.new(board)
 
 puts "Please enter player one's name: "
 human_player1_name = gets.chomp
-player1 = HumanPlayer.new(human_player1_name, :X, display)
+player1 = HumanPlayer.new(human_player1_name, :X)
 
 
 puts "Would you like to play against the computer? y/n"
 answer = gets.chomp
 if answer == 'y'
   computer_player_name = Faker::LordOfTheRings.character
-  player2 = ComputerPlayer.new(computer_player_name, :O, display, board)
+  player2 = ComputerPlayer.new(computer_player_name, :O, board)
   puts "You are playing against #{computer_player_name}."
   sleep(0.7)
 else
   puts "Please enter player two's name: "
   human_player2_name = gets.chomp
-  player2 = HumanPlayer.new(human_player2_name, :O, display)
+  player2 = HumanPlayer.new(human_player2_name, :O)
 end
 
 players = [player1, player2]
