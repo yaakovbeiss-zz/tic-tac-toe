@@ -1,21 +1,22 @@
 class Player
 
-  attr_reader :name, :symbol
-  attr_accessor :last_move
+  attr_reader :name
+  attr_accessor :symbol
 
-  def initialize(name, symbol)
+  def initialize(name)
     @name = name
     @symbol = symbol
   end
-
+  
 end
 
 class HumanPlayer < Player
 
-  def initialize(name, symbol)
-    super(name, symbol)
+  def initialize(name)
+    super(name)
   end
 
+  # board is duck typing, only is used by computer player
   def make_move(board, display)
     new_pos = nil
     until new_pos
@@ -29,16 +30,18 @@ end
 
 class ComputerPlayer < Player
 
-  def initialize(name, symbol)
-    super(name, symbol)
+  def initialize(name)
+    super(name)
   end
 
+  # display is duck typing, only is used by human player
   def make_move(board, display)
     winning_moves = find_winning_moves(board)
     return winning_moves.sample unless winning_moves.empty?
-    board.empty_spaces.sample
+    empty_spaces(board).sample
   end
 
+  # checks rows, cols and diags for winning moves and adds them to winning_moves array
   def find_winning_moves(board)
     winning_moves = []
     winning_moves.concat(winning_rows(board))
@@ -54,7 +57,6 @@ class ComputerPlayer < Player
       if count == board.size - 1
         col_idx = row.index(nil)
         rows << [row_idx, col_idx] if col_idx
-
       end
     end
     rows
@@ -68,7 +70,6 @@ class ComputerPlayer < Player
       if count == board.size - 1
         col_idx = row.index(nil)
         cols << [col_idx, row_idx] if col_idx
-
       end
     end
     cols
@@ -95,5 +96,15 @@ class ComputerPlayer < Player
     diags
   end
 
+  def empty_spaces(board)
+    spaces = []
+    board.grid.each_with_index do |row, row_idx|
+      row.each_with_index do |_, col_idx|
+        pos = [row_idx, col_idx]
+        spaces << pos if board.empty?(pos)
+      end
+    end
+    spaces
+  end
 
 end

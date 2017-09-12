@@ -1,14 +1,11 @@
-require 'byebug'
-
 class Board
 
   attr_reader :size, :grid
-  attr_accessor :last_move
 
+  # size allows for variable grid size
   def initialize(size = 3)
     @size = size
     @grid = Array.new(size) { Array.new(size) }
-    @last_move = nil
   end
 
   def [](pos)
@@ -23,17 +20,6 @@ class Board
 
   def empty?(pos)
     self[pos].nil?
-  end
-
-  def empty_spaces
-    spaces = []
-    grid.each_with_index do |row, row_idx|
-      row.each_with_index do |_, col_idx|
-        pos = [row_idx, col_idx]
-        spaces << pos if self.empty?(pos)
-      end
-    end
-    spaces
   end
 
   def full?

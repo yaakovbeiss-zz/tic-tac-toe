@@ -1,7 +1,5 @@
 require_relative 'cursor'
-require_relative 'board'
 require 'colorize'
-require 'byebug'
 
 class Display
 
@@ -12,7 +10,6 @@ class Display
     @board = board
     @cursor = Cursor.new([0,0], board)
     @game_info = ""
-    @errors = []
   end
 
   def render
@@ -29,19 +26,7 @@ class Display
       end
       print "\n"
     end
-    puts game_info
-    errors.map { |error| puts error }
-    sleep(0.4) unless errors.empty?
-    sleep(0.4) unless game_info.empty?
-    clear_errors
-  end
-
-  def clear_errors
-    @errors = []
-  end
-
-  def clear_game_info
-    @game_info = []
+    puts game_info.colorize(random_color)
   end
 
   def background_color(pos)
