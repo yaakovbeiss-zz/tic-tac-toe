@@ -53,7 +53,8 @@ class ComputerPlayer < Player
       count = row.select {|x| x == symbol }.count
       if count == board.size - 1
         col_idx = row.index(nil)
-        rows << [row_idx, col_idx]
+        rows << [row_idx, col_idx] if col_idx
+
       end
     end
     rows
@@ -66,7 +67,8 @@ class ComputerPlayer < Player
       count = row.select {|x| x == symbol }.count
       if count == board.size - 1
         col_idx = row.index(nil)
-        cols << [col_idx, row_idx]
+        cols << [col_idx, row_idx] if col_idx
+
       end
     end
     cols
@@ -79,7 +81,7 @@ class ComputerPlayer < Player
     if count == board.size - 1
       idx = diag1.index(nil)
       # on a top-left to bottom-right diag the indicies will always be equal
-      diags << [idx, idx]
+      diags << [idx, idx] if idx
     end
     size = board.size - 1
     diag2 = (0...board.size).collect {|i| board.grid[size - i][i]}
@@ -87,7 +89,7 @@ class ComputerPlayer < Player
     if count == board.size - 1
       idx = diag2.index(nil)
       # if diag2 = [X, X, nil] nil represents [0, 2] on the regular board
-      diags << [size - idx, idx]
+      diags << [size - idx, idx] if idx
     end
 
     diags

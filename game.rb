@@ -88,10 +88,11 @@ class Game
     loop do
       begin
         move = current_player.make_move(board, display)
+        print "move is: #{move}" 
         raise ValidMoveError unless board.empty?(move)
       rescue ValidMoveError => e
         puts e.message
-        debugger
+
         sleep(0.5)
         retry
       end
