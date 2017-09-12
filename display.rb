@@ -5,12 +5,13 @@ require 'byebug'
 
 class Display
 
-  attr_reader :cursor, :board, :errors, :game_info
+  attr_reader :cursor, :board, :errors
+  attr_accessor :game_info
 
   def initialize(board)
     @board = board
     @cursor = Cursor.new([0,0], board)
-    @game_info = []
+    @game_info = ""
     @errors = []
   end
 
@@ -28,12 +29,11 @@ class Display
       end
       print "\n"
     end
-    game_info.map { |info| puts info }
+    puts game_info
     errors.map { |error| puts error }
     sleep(0.4) unless errors.empty?
     sleep(0.4) unless game_info.empty?
     clear_errors
-    clear_game_info
   end
 
   def clear_errors

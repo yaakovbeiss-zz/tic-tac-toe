@@ -26,7 +26,7 @@ puts "Would you like to play against the computer? y/n"
 answer = gets.chomp
 if answer == 'y'
   computer_player_name = Faker::LordOfTheRings.character
-  player2 = ComputerPlayer.new(computer_player_name, :O, board)
+  player2 = ComputerPlayer.new(computer_player_name, :O)
   puts "You are playing against #{computer_player_name}."
   sleep(0.7)
 else

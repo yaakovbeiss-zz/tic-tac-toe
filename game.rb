@@ -69,10 +69,10 @@ class Game
     answer = gets.chomp
     if answer == 'y'
       reset_board
-      display.game_info << "Lets play again!"
+      display.game_info = "Lets play again!"
       play
     else
-      display.game_info << "Catch you later!"
+      display.game_info = "Catch you later!"
     end
     display.render
   end
@@ -83,22 +83,35 @@ class Game
   end
 
   def play
+    display.game_info = "It is #{current_player.name}'s turn."
     display.render
     loop do
-      move = current_player.make_move(display)
-      if board.empty?(move)
+      begin
+        move = current_player.make_move(board, display)
+        raise ValidMoveError unless board.empty?(move)
+      rescue ValidMoveError => e
+        puts e.message
+        debugger
+        sleep(0.5)
+        retry
+      end
         board[move] = current_player.symbol
         board.last_move = move
-      else
-        display.errors << "You can't move there."
-      end
+
       display.render
       break if game_over?
       switch_players
+      display.game_info = "It is #{current_player.name}'s turn."
     end
 
     play_again?
   end
 
 
+end
+
+class ValidMoveError < StandardError
+  def message
+    puts "The position you entered is not empty."
+  end
 end
