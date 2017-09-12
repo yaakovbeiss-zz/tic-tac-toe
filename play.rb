@@ -7,7 +7,7 @@ require 'colorize'
 
 def get_answer
   answer = ''
-  until answer == 'y' || answer == 'n'
+  until answer == 'y' || answer == 'n' || answer == 'r'
     puts "Please enter y or n".colorize(random_color)
     answer = gets.chomp
   end
@@ -48,10 +48,16 @@ elsif answer == 'n'
   player2 = HumanPlayer.new(human_player2_name)
 end
 
-puts "Would you like to go first? y/n".colorize(random_color)
+puts "Would you like to go first? y/n or r for random.".colorize(random_color)
 answer = get_answer
 
-answer == 'y' ? players = [player1, player2] : players = [player2, player1]
+if answer == 'y'
+  players = [player1, player2]
+elsif answer == 'n'
+  players = [player2, player1]
+elsif answer == 'r'
+  players = [player2, player1].shuffle
+end
 
 game = Game.new(board, display, players)
 game.play
